@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For Shahin 🌙💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- CORE STYLES --- */
+        body {
+            margin: 0; padding: 0; height: 100vh; overflow: hidden;
+            background: linear-gradient(to bottom, #1a0b2e, #4a148c, #ff69b4);
+            font-family: 'Poppins', sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; color: white;
+            touch-action: manipulation; /* Improves touch response */
+        }
+
+        /* --- ANIMATED STARS --- */
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 50px 50px; opacity: 0.5;
+        }
+
+        /* --- SCREEN LOGIC --- */
+        .screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.8s ease;
+            padding: 20px; box-sizing: border-box;
+            background: rgba(0,0,0,0.2); /* Slight dim for readability */
+        }
+        .active { opacity: 1; pointer-events: all; z-index: 10; }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-family: 'Dancing Script', cursive; font-size: 3rem;
+            text-shadow: 0 0 10px #ff1493; margin-bottom: 10px; line-height: 1.2;
+        }
+        p { font-size: 1.1rem; line-height: 1.6; max-width: 500px; margin: 10px auto; }
+        .highlight { color: #ffd700; font-weight: bold; }
+
+        /* --- BUTTONS --- */
+        .btn {
+            background: white; color: #4a148c; border: none; padding: 12px 35px;
+            font-size: 1.2rem; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin-top: 20px;
+            font-weight: bold; transition: transform 0.2s;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        /* --- ENVELOPE STYLES --- */
+        .envelope-container { cursor: pointer; margin: 30px auto; animation: float 3s infinite ease-in-out; }
+        .envelope { font-size: 100px; transition: transform 0.5s; }
+        .letter-content {
+            background: white; color: #333; padding: 20px; border-radius: 10px;
+            max-width: 85%; transform: scale(0); transition: transform 0.5s;
+            box-shadow: 0 0 30px rgba(255,255,255,0.5);
+        }
+        .letter-show { transform: scale(1); }
+
+        /* --- TRAVEL PRANK BUTTONS --- */
+        .btn-group {
+            position: relative; width: 100%; height: 200px; margin-top: 20px;
+            display: flex; justify-content: center; align-items: flex-start; gap: 20px;
+        }
+        #yes-btn { z-index: 100; background: #2ecc71; color: white; }
+        #no-btn {
+            position: absolute; /* Crucial for moving */
+            background: #e74c3c; color: white; transition: 0.1s;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes float { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-20px);} }
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.1);} 100% {transform: scale(1);} }
+        .heart-beat { animation: pulse 1s infinite; display: inline-block; color: #ff1493; }
+
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <!-- AUDIO (Must be clicked to play) -->
+    <audio id="bg-music" loop>
+        <!-- Put your song.mp3 in the folder if you have one -->
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- SCREEN 1: INTRO -->
+    <div id="screen-1" class="screen active">
+        <div style="font-size: 60px;">🌙 ✨</div>
+        <h1>Ramadan Mubarak<br>& Happy Birthday!</h1>
+        <p>Shahin, you were born in the holiest month.</p>
+        <p>That makes you <span class="highlight">Allah's Favorite.</span></p>
+        <button class="btn" onclick="nextScreen(1)">Start Surprise 🎁</button>
+    </div>
+
+    <!-- SCREEN 2: THE LETTER -->
+    <div id="screen-2" class="screen">
+        <h1>I wrote something for you...</h1>
+        <p>Tap the envelope to open it.</p>
+        
+        <div class="envelope-container" onclick="openLetter()">
+            <div class="envelope" id="env-icon">💌</div>
+        </div>
+
+        <div class="letter-content" id="my-letter">
+            <h2 style="color:#d35400; font-family:'Dancing Script'; margin:0;">Dear Shahin,</h2>
+            <p style="font-size: 0.95rem;">
+                In a world full of trends, you remain a classic. Your modesty is your crown, and your kindness is your superpower. 
+                <br><br>
+                May your heart always be at peace, and may your Duas be answered instantly. You are rare. You are precious.
+            </p>
+            <button class="btn" style="background: #d35400; color: white; font-size: 1rem;" onclick="nextScreen(2)">Close & Continue</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: CAKE -->
+    <div id="screen-3" class="screen">
+        <h1>Make a Wish 🎂</h1>
+        <div style="font-size: 80px; margin: 20px; cursor: pointer;" onclick="blowCandle()" id="cake-icon">🕯️</div>
+        <p>Tap the candle to blow it out!</p>
+    </div>
+
+    <!-- SCREEN 4: BALLOONS -->
+    <div id="screen-4" class="screen">
+        <h1>Pop 3 Balloons! 🎈</h1>
+        <p>For Good Luck & Happiness</p>
+    </div>
+
+    <!-- SCREEN 5: THE QUESTION (PRANK) -->
+    <div id="screen-5" class="screen">
+        <h1>One Last Question... ✈️</h1>
+        <p>Shahin, would you like to travel the world with me?</p>
+        
+        <div class="btn-group">
+            <button class="btn" id="yes-btn" onclick="sayYes()">YES! Let's Go!</button>
+            <button class="btn" id="no-btn">NO ❌</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 6: FINALE -->
+    <div id="screen-6" class="screen">
+        <h1>Alhamdulillah! 💍✈️</h1>
+        <p>I knew you would say Yes! 😉</p>
+        <p>Pack your bags, Beautiful. The world is waiting for us.</p>
+        <p>May Allah bless your new age!</p>
+        <div style="font-size: 60px;">🕋 🕌 💖</div>
+    </div>
+
+    <script>
+        // --- MUSIC & NAVIGATION ---
+        const music = document.getElementById('bg-music');
+        
+        function nextScreen(current) {
+            if(current === 1) { 
+                try { music.play(); } catch(e) {} 
+            }
+            document.getElementById(`screen-${current}`).classList.remove('active');
+            document.getElementById(`screen-${current+1}`).classList.add('active');
+        }
+
+        // --- LETTER LOGIC ---
+        function openLetter() {
+            document.getElementById('env-icon').style.display = 'none';
+            document.getElementById('my-letter').classList.add('letter-show');
+        }
+
+        // --- CAKE LOGIC ---
+        function blowCandle() {
+            document.getElementById('cake-icon').innerText = "🎂"; // Changes to cake without candle
+            setTimeout(() => { nextScreen(3); startBalloons(); }, 1000);
+        }
+
+        // --- BALLOON LOGIC ---
+        let popped = 0;
+        function startBalloons() {
+            const interval = setInterval(() => {
+                if(popped >= 3) {
+                    clearInterval(interval);
+                    setTimeout(() => nextScreen(4), 1000);
+                    return;
+                }
+                createBalloon();
+            }, 800);
+        }
+
+        function createBalloon() {
+            const b = document.createElement('div');
+            b.innerText = "🎈";
+            b.style.position = 'fixed';
+            b.style.bottom = '-50px';
+            b.style.left = Math.random() * 80 + 10 + 'vw';
+            b.style.fontSize = '60px';
+            b.style.transition = 'transform 5s linear';
+            b.style.zIndex = 100;
+            
+            b.onclick = function() {
+                popped++;
+                b.innerText = "✨";
+                setTimeout(() => b.remove(), 200);
+            };
+            
+            document.body.appendChild(b);
+            setTimeout(() => { b.style.transform = "translateY(-120vh)"; }, 50);
+        }
+
+        // --- THE PRANK (RUNAWAY BUTTON) ---
+        const noBtn = document.getElementById('no-btn');
+        
+        // This function moves the button to a random spot
+        function moveButton() {
+            // Get window size
+            const maxWidth = window.innerWidth - 100; // Subtract button width approx
+            const maxHeight = window.innerHeight - 100; // Subtract button height approx
+            
+            // Random Coordinates
+            const newX = Math.random() * maxWidth;
+            const newY = Math.random() * maxHeight;
+            
+            noBtn.style.position = 'fixed'; // Force fixed position to jump anywhere
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+
+        // Add Event Listeners for both Mouse (Computer) and Touch (Phone)
+        noBtn.addEventListener('mouseover', moveButton); // For PC cursor
+        noBtn.addEventListener('touchstart', moveButton); // For Phone finger tap
+        noBtn.addEventListener('click', moveButton); // Backup if they click fast
+
+        function sayYes() {
+            nextScreen(5);
+            startConfetti();
+        }
+
+        // --- CONFETTI ---
+        function startConfetti() {
+            for(let i=0; i<50; i++) {
+                const c = document.createElement('div');
+                c.style.position = 'fixed';
+                c.style.width = '10px'; c.style.height = '10px';
+                c.style.background = ['gold', 'pink', 'white'][Math.floor(Math.random()*3)];
+                c.style.left = Math.random()*100+'vw';
+                c.style.top = '-10px';
+                document.body.appendChild(c);
+                c.animate([
+                    {transform: 'translateY(0)', opacity: 1}, 
+                    {transform: `translateY(100vh) rotate(${Math.random()*360}deg)`, opacity:0}
+                ], { duration: 2000 + Math.random()*2000 });
+            }
+        }
+    </script>
+</body>
+</html>
